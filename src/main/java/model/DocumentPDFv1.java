@@ -21,6 +21,7 @@ import java.io.IOException;
 
 public class DocumentPDFv1 implements IDocumentPDF{
     private static final Logger logger = LogManager.getLogger(DocumentPDFv1.class);
+    public static final String JAVAX_IMAGEIO_JPEG_IMAGE_1_0 = "javax_imageio_jpeg_image_1.0";
     private PDDocument pdfDocument;
     public static final String VALUE = "value";
     public static final String DENSITY_UNITS_NO_UNITS = "00";
@@ -49,7 +50,6 @@ public class DocumentPDFv1 implements IDocumentPDF{
                 continue;
             }
 
-            //metadata = setDPI(metadata);
             setDPI2(metadata);
 
             final File file = new File(tempDir, outputFileName);
@@ -78,24 +78,23 @@ public class DocumentPDFv1 implements IDocumentPDF{
             IIOMetadataNode dim = new IIOMetadataNode("Dimension");
             dim.appendChild(horiz);
             dim.appendChild(vert);
-            //printChildren(dim, "");
 
             IIOMetadataNode jpegVariety = new IIOMetadataNode("JPEGvariety");
             IIOMetadataNode markerSequence = new IIOMetadataNode("markerSequence");
             IIOMetadataNode sof = new IIOMetadataNode("sof");
 
-            IIOMetadataNode root = new IIOMetadataNode("javax_imageio_jpeg_image_1.0");
+            IIOMetadataNode root = new IIOMetadataNode(JAVAX_IMAGEIO_JPEG_IMAGE_1_0);
             root.appendChild(dim);
             root.appendChild(jpegVariety);
             root.appendChild(markerSequence);
             printChildren(root, "");
             root.appendChild(sof);
 
-            metadata.mergeTree("javax_imageio_jpeg_image_1.0", root);
+            metadata.mergeTree(JAVAX_IMAGEIO_JPEG_IMAGE_1_0, root);
     }
 
     private static void setDPI2(IIOMetadata metadata) throws IIOInvalidTreeException {
-        String metadataFormat = "javax_imageio_jpeg_image_1.0";
+        String metadataFormat = JAVAX_IMAGEIO_JPEG_IMAGE_1_0;
         IIOMetadataNode root = new IIOMetadataNode(metadataFormat);
         IIOMetadataNode jpegVariety = new IIOMetadataNode("JPEGvariety");
         IIOMetadataNode markerSequence = new IIOMetadataNode("markerSequence");
@@ -127,9 +126,6 @@ public class DocumentPDFv1 implements IDocumentPDF{
         for (int n = 0; n < childCount; ++n) {
             IIOMetadataNode child = (IIOMetadataNode) childNodes.item(n);
             String childName = child.getNodeName();
-
-            // Accédez aux valeurs des nœuds ici
-            // Exemple : String value = child.getAttribute("attributName");
 
             NamedNodeMap attributes = child.getAttributes();
             int aLength = attributes.getLength();

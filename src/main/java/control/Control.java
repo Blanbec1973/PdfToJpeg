@@ -1,6 +1,5 @@
 package control;
 
-import model.DocumentPDFv0;
 import model.DocumentPDFv1;
 import model.IDocumentPDF;
 import model.MyFileUtils;
@@ -14,9 +13,6 @@ import java.io.IOException;
 
 public class Control {
     private static final Logger logger = LogManager.getLogger(Control.class);
-    private View view = new View();
-    private MyFileUtils myFileUtils = new MyFileUtils();
-    private boolean continueProgram = true;
 
     public static void main(String[] args) throws IOException {
         new Control();
@@ -27,11 +23,13 @@ public class Control {
         logger.info("Starting PdfToJpeg");
         Parameters parameters = new Parameters("config.properties");
         logger.info("PdfToJpeg version v{}",parameters.getVersion());
+        MyFileUtils myFileUtils = new MyFileUtils();
         myFileUtils.setRootDirectory(parameters.getProperty("rootDirectory"));
 
-        continueProgram = myFileUtils.findFileToProcess();
+        boolean continueProgram = myFileUtils.findFileToProcess();
 
         if (continueProgram) {
+            View view = new View();
             continueProgram = view.askUserForConfirmation("Proceed file "+
                               myFileUtils.getMostRecentFile().getName() + " ?" );
         }

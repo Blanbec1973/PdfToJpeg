@@ -37,5 +37,6 @@ public class DocumentPDFv0 implements IDocumentPDF {
 
     @Override
     public void setDPI(IIOMetadata metadata) {
+        throw new UnsupportedOperationException();
     }
 }
