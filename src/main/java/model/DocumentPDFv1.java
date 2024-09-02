@@ -22,7 +22,7 @@ import java.io.IOException;
 public class DocumentPDFv1 implements IDocumentPDF{
     private static final Logger logger = LogManager.getLogger(DocumentPDFv1.class);
     public static final String JAVAX_IMAGEIO_JPEG_IMAGE_1_0 = "javax_imageio_jpeg_image_1.0";
-    private PDDocument pdfDocument;
+    private final PDDocument pdfDocument;
     public static final String VALUE = "value";
     public static final String DENSITY_UNITS_NO_UNITS = "00";
     public static final String DENSITY_UNITS_PIXELS_PER_INCH = "01";

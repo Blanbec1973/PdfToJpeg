@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public interface IDocumentPDF {
 
-    public boolean convertPdfToJpeg(String rootFileName, File tempDir) throws IOException;
-    public void setDPI(IIOMetadata metadata) throws IIOInvalidTreeException;
+    boolean convertPdfToJpeg(String rootFileName, File tempDir) throws IOException;
+    void setDPI(IIOMetadata metadata) throws IIOInvalidTreeException;
 
 }
