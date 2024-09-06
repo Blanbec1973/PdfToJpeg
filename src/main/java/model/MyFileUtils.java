@@ -31,10 +31,11 @@ public class MyFileUtils {
         String temp = tempName.substring(first, end);
         int fileNumber = Integer.parseInt(temp.trim());
 
-        if (fileNumber == 12 || fileNumber == 22) {
+        if (fileNumber == 12 || fileNumber == 22 || fileNumber == 32) {
             String tempDest1 = tempName.replace("- 12 -","- 13 -");
             String tempDest2 = tempDest1.replace("- 22 -", "- 23 -");
-            rootFileName = tempDest2.replace(".pdf", "");
+            String tempDest3 = tempDest2.replace("- 32 -","- 33 -");
+            rootFileName = tempDest3.replace(".pdf", "");
             logger.info ("Target file name : {}",rootFileName);
             return true ;
         }
