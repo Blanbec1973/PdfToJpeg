@@ -17,16 +17,17 @@ public class Control {
     private static final Logger logger = LogManager.getLogger(Control.class);
 
     public static void main(String[] args) throws IOException {
-        new Control();
+        new Control(args);
     }
 
-    Control() throws IOException {
+    public Control(String[] args) throws IOException {
         long start = System.currentTimeMillis();
         logger.info("Starting PdfToJpeg");
         Parameter parameters = new Parameter("config.properties");
         logger.info("PdfToJpeg version v{}",parameters.getVersion());
+        ArgsChecker argsChecker = new ArgsChecker(args,parameters);
         MyFileUtils myFileUtils = new MyFileUtils();
-        myFileUtils.setRootDirectory(parameters.getProperty("rootDirectory"));
+        myFileUtils.setRootDirectory(argsChecker.getDirectory());
 
         boolean continueProgram = myFileUtils.findFileToProcess();
 
@@ -41,7 +42,7 @@ public class Control {
         }
 
         if (continueProgram) {
-            myFileUtils.createTempDirectory(parameters.getProperty("rootDirectory")+"TEMP"+System.currentTimeMillis());
+            myFileUtils.createTempDirectory("TEMP"+System.currentTimeMillis());
         }
 
         if (continueProgram) {
