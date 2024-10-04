@@ -24,10 +24,7 @@ public class DocumentPDFv1 implements IDocumentPDF{
     public static final String JAVAX_IMAGEIO_JPEG_IMAGE_1_0 = "javax_imageio_jpeg_image_1.0";
     private final PDDocument pdfDocument;
     public static final String VALUE = "value";
-    public static final String DENSITY_UNITS_NO_UNITS = "00";
     public static final String DENSITY_UNITS_PIXELS_PER_INCH = "01";
-    public static final String DENSITY_UNITS_PIXELS_PER_CM = "02";
-
 
 
     public DocumentPDFv1(File mostRecentFile) throws IOException {
@@ -69,14 +66,14 @@ public class DocumentPDFv1 implements IDocumentPDF{
             // for JFIF, it's dots per inch
             double dotsPerInch = 150;
 
-            IIOMetadataNode horiz = new IIOMetadataNode("HorizontalPixelSize");
-            horiz.setAttribute(VALUE, Double.toString(dotsPerInch));
+            IIOMetadataNode horizontal = new IIOMetadataNode("HorizontalPixelSize");
+            horizontal.setAttribute(VALUE, Double.toString(dotsPerInch));
 
             IIOMetadataNode vert = new IIOMetadataNode("VerticalPixelSize");
             vert.setAttribute(VALUE, Double.toString(dotsPerInch));
 
             IIOMetadataNode dim = new IIOMetadataNode("Dimension");
-            dim.appendChild(horiz);
+            dim.appendChild(horizontal);
             dim.appendChild(vert);
 
             IIOMetadataNode jpegVariety = new IIOMetadataNode("JPEGvariety");

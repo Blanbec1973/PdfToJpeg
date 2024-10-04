@@ -9,7 +9,6 @@ import java.io.IOException;
 
 public class MyFileUtils {
     private static final Logger logger = LogManager.getLogger(MyFileUtils.class);
-
     private File rootDirectory = null;
     private String rootFileName = null;
     private File tempDir = null;
