@@ -6,9 +6,11 @@ import model.MyFileUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.heyner.common.Parameter;
 import view.View;
 
 import java.io.IOException;
+
 
 
 public class Control {
@@ -21,7 +23,7 @@ public class Control {
     Control() throws IOException {
         long start = System.currentTimeMillis();
         logger.info("Starting PdfToJpeg");
-        Parameters parameters = new Parameters("config.properties");
+        Parameter parameters = new Parameter("config.properties");
         logger.info("PdfToJpeg version v{}",parameters.getVersion());
         MyFileUtils myFileUtils = new MyFileUtils();
         myFileUtils.setRootDirectory(parameters.getProperty("rootDirectory"));
