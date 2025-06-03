@@ -34,7 +34,8 @@ public class MyFileUtils {
             String tempDest1 = tempName.replace("- 12 -","- 13 -");
             String tempDest2 = tempDest1.replace("- 22 -", "- 23 -");
             String tempDest3 = tempDest2.replace("- 32 -","- 33 -");
-            rootFileName = tempDest3.replace(".pdf", "");
+            String tempDest4 = tempDest3.replace(".PDF", "");
+            rootFileName = tempDest4.replace(".pdf", "");
             logger.info ("Target file name : {}",rootFileName);
             return true ;
         }
@@ -54,7 +55,7 @@ public class MyFileUtils {
     public boolean findFileToProcess() {
         logger.info("Try to find file in {}.", rootDirectory);
 
-        File[] files = rootDirectory.listFiles((dir, name) -> name.endsWith(".pdf"));
+        File[] files = rootDirectory.listFiles((dir, name) -> name.toLowerCase().endsWith(".pdf"));
 
         long mostRecentTimestamp = Long.MIN_VALUE;
 
