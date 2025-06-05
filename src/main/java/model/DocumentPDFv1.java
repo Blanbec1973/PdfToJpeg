@@ -130,7 +130,8 @@ public class DocumentPDFv1 implements IDocumentPDF{
             for (int a = 0; a < aLength; ++a) {
                 Node item = attributes.item(a);
                 final String itemName = item.getNodeName();
-                System.out.printf("  [%s/%s] %s = %s%n", indent, childName, itemName, child.getAttribute(itemName));
+                if (logger.isInfoEnabled())
+                    logger.info("  [%s/%s] %s = %s%n", indent, childName, itemName, child.getAttribute(itemName));
             }
 
             printChildren(child, indent);
