@@ -6,7 +6,7 @@
 
     <groupId>org.heyner</groupId>
     <artifactId>PdfToJpeg</artifactId>
-    <version>0.4</version>
+    <version>1.0</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

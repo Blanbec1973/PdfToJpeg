@@ -25,7 +25,7 @@ public class Control {
         logger.info("Starting PdfToJpeg");
         Parameter parameters = new Parameter("config.properties");
         logger.info("PdfToJpeg version v{}",parameters.getVersion());
-        ArgsChecker argsChecker = new ArgsChecker(args,parameters);
+        ArgsChecker argsChecker = new ArgsChecker(args);
         MyFileUtils myFileUtils = new MyFileUtils();
         myFileUtils.setRootDirectory(argsChecker.getDirectory());
 
