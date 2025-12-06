@@ -54,7 +54,7 @@
         <dependency>
             <groupId>org.heyner</groupId>
             <artifactId>common</artifactId>
-            <version>3.0</version>
+            <version>3.2</version>
         </dependency>
     </dependencies>
     <build>
