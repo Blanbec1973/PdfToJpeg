@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ViewUI {
     private static JTextArea logArea;
     private static JFrame frame;
-    private AtomicBoolean userConfirmed = new AtomicBoolean(false);
+    private final AtomicBoolean userConfirmed = new AtomicBoolean(false);
 
     public ViewUI() {
         frame = new JFrame("PdfToJpeg - Traitement");
