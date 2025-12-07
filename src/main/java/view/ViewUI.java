@@ -21,15 +21,14 @@ public class ViewUI {
         frame.setVisible(true);
     }
 
-
     public static void appendLogStatic(String msg) {
-        if (logArea != null) {
-            SwingUtilities.invokeLater(() -> {
-                logArea.append(msg);
-                logArea.setCaretPosition(logArea.getDocument().getLength());
-            });
-        }
+        SwingUtilities.invokeLater(() -> {
+            logArea.append(msg);
+            logArea.setCaretPosition(logArea.getDocument().getLength());
+        });
+
     }
+
     public boolean askUserForConfirmation(String msg) {
         int result = JOptionPane.showConfirmDialog(frame, msg, "Confirmation", JOptionPane.YES_NO_OPTION);
         userConfirmed.set(result == JOptionPane.YES_OPTION);
@@ -62,5 +61,4 @@ public class ViewUI {
 
         dialog.setVisible(true);
     }
-
 }

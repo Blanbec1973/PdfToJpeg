@@ -7,7 +7,7 @@
             <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
         </Console>
 
-        <File name="file" fileName="logs/PdfToJpeg.log">
+        <File name="file" fileName="${sys:user.home}/WorkSpace/logs/PdfToJpeg.log">
             <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
         </File>
 
