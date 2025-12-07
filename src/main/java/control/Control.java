@@ -5,16 +5,17 @@ import model.IDocumentPDF;
 import model.MyFileUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.Logger;
 import org.heyner.common.Parameter;
-import view.View;
+import view.ViewUI;
+import view.ViewUIAppender;
 
 import java.io.IOException;
 
 
 
 public class Control {
-    private static final Logger logger = LogManager.getLogger(Control.class);
+    //private static final Logger logger = LogManager.getLogger(Control.class);
 
     public static void main(String[] args) throws IOException {
         new Control(args);
@@ -22,9 +23,20 @@ public class Control {
 
     public Control(String[] args) throws IOException {
         long start = System.currentTimeMillis();
+        ViewUI viewUI = new ViewUI();
+        // Récupère le logger racine en tant que 'core.Logger'
+        Logger logger = (Logger) LogManager.getRootLogger();
+
+        ViewUIAppender appender = ViewUIAppender.createAppender();
+        appender.start(); // <-- Démarre l'appender
+        logger.addAppender(appender);
+        logger.setAdditive(true); // Pour garder les autres appenders (console, fichier)
+
         logger.info("Starting PdfToJpeg");
+
         Parameter parameters = new Parameter("config.properties");
         logger.info("PdfToJpeg version v{}",parameters.getVersion());
+
         ArgsChecker argsChecker = new ArgsChecker(args);
         MyFileUtils myFileUtils = new MyFileUtils();
         myFileUtils.setRootDirectory(argsChecker.getDirectory());
@@ -32,8 +44,7 @@ public class Control {
         boolean continueProgram = myFileUtils.findFileToProcess();
 
         if (continueProgram) {
-            View view = new View();
-            continueProgram = view.askUserForConfirmation("Proceed file "+
+            continueProgram = viewUI.askUserForConfirmation("Proceed file "+
                               myFileUtils.getMostRecentFile().getName() + " ?" );
         }
 
@@ -57,7 +68,10 @@ public class Control {
         if (myFileUtils.getTempDir() != null) {
             FileUtils.deleteDirectory(myFileUtils.getTempDir());
             logger.info("Deleting Temp directory {}.", myFileUtils.getTempDir());
+            //viewUI.appendLog("Deleting Temp directory "+myFileUtils.getTempDir()+".");
         }
         logger.info("PDfToJpeg done in {} ms", System.currentTimeMillis() - start);
+        //viewUI.appendLog("Traitement terminé !");
+        viewUI.showBottomRightDialogAndExit();
     }
 }
