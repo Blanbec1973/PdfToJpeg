@@ -15,7 +15,6 @@ import java.io.IOException;
 
 
 public class Control {
-    //private static final Logger logger = LogManager.getLogger(Control.class);
 
     public static void main(String[] args) throws IOException {
         new Control(args);
@@ -68,10 +67,8 @@ public class Control {
         if (myFileUtils.getTempDir() != null) {
             FileUtils.deleteDirectory(myFileUtils.getTempDir());
             logger.info("Deleting Temp directory {}.", myFileUtils.getTempDir());
-            //viewUI.appendLog("Deleting Temp directory "+myFileUtils.getTempDir()+".");
         }
         logger.info("PDfToJpeg done in {} ms", System.currentTimeMillis() - start);
-        //viewUI.appendLog("Traitement terminé !");
         viewUI.showBottomRightDialogAndExit();
     }
 }

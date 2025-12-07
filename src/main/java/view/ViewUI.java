@@ -6,16 +6,14 @@ import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ViewUI {
-    private static JTextArea logArea;
-    private static JFrame frame;
+    private static final JTextArea logArea = new JTextArea();
+    private static final JFrame frame= new JFrame("PdfToJpeg - Traitement");
     private final AtomicBoolean userConfirmed = new AtomicBoolean(false);
 
     public ViewUI() {
-        frame = new JFrame("PdfToJpeg - Traitement");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(1000, 400);
 
-        logArea = new JTextArea();
         logArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(logArea);
 
@@ -41,12 +39,12 @@ public class ViewUI {
     public void showBottomRightDialogAndExit() {
         // Crée le dialog
         JDialog dialog = new JDialog(frame, "Fin du traitement", true);
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dialog.setSize(300, 120);
 
         // Ajoute le contenu
         JPanel panel = new JPanel(new BorderLayout());
-        panel.add(new JLabel("Traitement terminé.\nCliquez sur OK pour quitter."), BorderLayout.CENTER);
+        panel.add(new JLabel("Traitement terminé.\nOK pour quitter."), BorderLayout.CENTER);
         JButton okButton = new JButton("OK");
         okButton.addActionListener(e -> {
             dialog.dispose();
