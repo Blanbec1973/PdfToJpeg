@@ -1,9 +1,7 @@
 package control;
 
-import model.DocumentPDFv1;
-import model.IDocumentPDF;
-import model.MyFileUtils;
-import org.apache.commons.io.FileUtils;
+import model.ProcessingContext;
+import model.steps.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.heyner.common.Parameter;
@@ -20,7 +18,7 @@ public class Control {
         new Control(args);
     }
 
-    public Control(String[] args) throws IOException {
+    public Control(String[] args) {
         long start = System.currentTimeMillis();
         ViewUI viewUI = new ViewUI();
         // Récupère le logger racine en tant que 'core.Logger'
@@ -37,37 +35,56 @@ public class Control {
         logger.info("PdfToJpeg version v{}",parameters.getVersion());
 
         ArgsChecker argsChecker = new ArgsChecker(args);
-        MyFileUtils myFileUtils = new MyFileUtils();
-        myFileUtils.setRootDirectory(argsChecker.getDirectory());
+        ProcessingContext context = new ProcessingContext(viewUI);
+        context.setRootDirectory(argsChecker.getDirectory());
 
-        boolean continueProgram = myFileUtils.findFileToProcess();
 
-        if (continueProgram) {
-            continueProgram = viewUI.askUserForConfirmation("Proceed file "+
-                              myFileUtils.getMostRecentFile().getName() + " ?" );
+        ProcessingStep step1 = new FindFileStep(logger);
+        ProcessingStep step2 = new AskUserConfirmationStep(logger);
+        ProcessingStep step3 = new CalculateRootFileNameStep(logger);
+        ProcessingStep step4 = new CreateTempDirectoryStep(logger);
+        ProcessingStep step5 = new ConvertPdfToJpegStep(logger);
+        ProcessingStep step6 = new CopyFileStep(logger);
+        ProcessingStep step7 = new CleaningStep(logger);
+
+        step1.setNext(step2);
+        step2.setNext(step3);
+        step3.setNext(step4);
+        step4.setNext(step5);
+        step5.setNext(step6);
+        step6.setNext(step7);
+
+        boolean result = step1.handle(context);
+
+        if (result) {
+            System.out.println("Traitement terminé avec succès !");
+            // Affichage final, suppression du répertoire temporaire, etc.
+        } else {
+            System.out.println("Le traitement a été interrompu.");
         }
 
-        if (continueProgram) {
-            continueProgram = myFileUtils.calculateRootFileName(myFileUtils.getMostRecentFile());
+
+        /*boolean continueProgram = myFileUtils.findFileToProcess();
+
+
+        if (!myFileUtils.findFileToProcess()) {
+            logger.info("No file to process.");
+            return;
         }
 
-        if (continueProgram) {
-            myFileUtils.createTempDirectory("TEMP"+System.currentTimeMillis());
+        if (!myFileUtils.calculateRootFileName(myFileUtils.getMostRecentFile())) {
+            logger.info("Nom de fichier cible incorrect.");
+            return;
         }
 
-        if (continueProgram) {
-            IDocumentPDF monDoc = new DocumentPDFv1(myFileUtils.getMostRecentFile());
-            continueProgram = monDoc.convertPdfToJpeg(myFileUtils.getRootFileName(), myFileUtils.getTempDir());
-        }
+
+
+
 
         if (continueProgram) {
             myFileUtils.copyDirectoryTemp();
         }
-
-        if (myFileUtils.getTempDir() != null) {
-            FileUtils.deleteDirectory(myFileUtils.getTempDir());
-            logger.info("Deleting Temp directory {}.", myFileUtils.getTempDir());
-        }
+*/
         logger.info("PDfToJpeg done in {} ms", System.currentTimeMillis() - start);
         viewUI.showBottomRightDialogAndExit();
     }
