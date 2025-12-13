@@ -4,7 +4,6 @@ package view;
 import org.apache.logging.log4j.core.*;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.layout.PatternLayout;
-import org.apache.logging.log4j.core.LogEvent;
 
 import java.io.Serializable;
 

@@ -6,7 +6,7 @@ import org.apache.logging.log4j.core.Logger;
 
 public abstract class AbstractProcessingStep implements ProcessingStep {
     protected ProcessingStep next;
-    protected Logger logger;
+    protected final Logger logger;
 
     public AbstractProcessingStep(Logger logger) {
         this.logger = logger;

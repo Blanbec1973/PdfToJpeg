@@ -17,7 +17,7 @@ public class CopyFileStep extends AbstractProcessingStep {
         try {
             FileUtils.copyDirectory(context.getTempDir(), context.getRootDirectory());
         } catch (IOException e) {
-            logger.error("Error while copying files : "+e.getMessage());
+            logger.error("Error while copying files : {}", e.getMessage());
             return false;
         }
         logger.info("Copying files from {} to {}", context.getTempDir(), context.getRootDirectory());

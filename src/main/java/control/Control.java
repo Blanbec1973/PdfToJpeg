@@ -8,21 +8,17 @@ import org.heyner.common.Parameter;
 import view.ViewUI;
 import view.ViewUIAppender;
 
-import java.io.IOException;
-
-
 
 public class Control {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        Logger logger = (Logger) LogManager.getRootLogger();
         try {
             new Control(args);
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage());
-            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(null, "Error : " + e.getMessage());
+            logger.error("Initialization error : {}", e.getMessage());
         }
-
-
     }
 
     public Control(String[] args) {
@@ -32,9 +28,9 @@ public class Control {
         Logger logger = (Logger) LogManager.getRootLogger();
 
         ViewUIAppender appender = ViewUIAppender.createAppender();
-        appender.start(); // <-- Démarre l'appender
+        appender.start();
         logger.addAppender(appender);
-        logger.setAdditive(true); // Pour garder les autres appenders (console, fichier)
+        logger.setAdditive(true); // Keep other appends (console, file)
 
         logger.info("Starting PdfToJpeg");
 
@@ -70,28 +66,6 @@ public class Control {
             System.out.println("Le traitement a été interrompu.");
         }
 
-
-        /*boolean continueProgram = myFileUtils.findFileToProcess();
-
-
-        if (!myFileUtils.findFileToProcess()) {
-            logger.info("No file to process.");
-            return;
-        }
-
-        if (!myFileUtils.calculateRootFileName(myFileUtils.getMostRecentFile())) {
-            logger.info("Nom de fichier cible incorrect.");
-            return;
-        }
-
-
-
-
-
-        if (continueProgram) {
-            myFileUtils.copyDirectoryTemp();
-        }
-*/
         logger.info("PDfToJpeg done in {} ms", System.currentTimeMillis() - start);
         viewUI.showBottomRightDialogAndExit();
     }

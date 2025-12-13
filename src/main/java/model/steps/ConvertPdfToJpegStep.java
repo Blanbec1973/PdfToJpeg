@@ -21,7 +21,7 @@ public class ConvertPdfToJpegStep extends AbstractProcessingStep {
             IDocumentPDF monDoc = new DocumentPDFv1(context.getMostRecentFile());
             success = monDoc.convertPdfToJpeg(context.getRootFileName(), context.getTempDir());
         } catch (IOException e) {
-            logger.error("Error while converting PDF to JPEG : "+e.getMessage());
+            logger.error("Error while converting PDF to JPEG : {}", e.getMessage());
             return false;
         }
         if (!success) {
