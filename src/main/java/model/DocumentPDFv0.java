@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class DocumentPDFv0 implements IDocumentPDF {
-    private static final Logger logger = LogManager.getLogger(DocumentPDFv0.class);
+    private static final Logger logger = LogManager.getRootLogger();
     private final PDDocument pdfDocument;
 
     public DocumentPDFv0(File mostRecentFile) throws IOException {

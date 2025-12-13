@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ArgsChecker {
-    private static final Logger logger = LogManager.getLogger(ArgsChecker.class);
+    private static final Logger logger = LogManager.getRootLogger();
     private final String directory;
 
     public String getDirectory() {return directory;}

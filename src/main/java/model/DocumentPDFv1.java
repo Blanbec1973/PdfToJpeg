@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class DocumentPDFv1 implements IDocumentPDF{
-    private static final Logger logger = LogManager.getLogger(DocumentPDFv1.class);
+    private static final Logger logger = LogManager.getRootLogger();
     public static final String JAVAX_IMAGEIO_JPEG_IMAGE_1_0 = "javax_imageio_jpeg_image_1.0";
     private final PDDocument pdfDocument;
     public static final String VALUE = "value";
@@ -50,9 +50,16 @@ public class DocumentPDFv1 implements IDocumentPDF{
             setDPI2(metadata);
 
             final File file = new File(tempDir, outputFileName);
+            logger.info("Tentative de création du fichier : {}", file.getAbsolutePath());
             try (ImageOutputStream stream = ImageIO.createImageOutputStream(file)) {
+                if (stream == null) {
+                    throw new IOException("Impossible de créer le flux de sortie pour " + file.getAbsolutePath());
+                }
                 writer.setOutput(stream);
                 writer.write(metadata, new IIOImage(image, null, metadata), writeParam);
+            } catch (Throwable t) {
+                logger.error("Erreur lors de la création du fichier : {}", t.getMessage(), t);
+                javax.swing.JOptionPane.showMessageDialog(null, "Erreur : " + t.getMessage());
             }
 
             logger.info("Creating file {}.", file.getAbsolutePath());
@@ -131,10 +138,15 @@ public class DocumentPDFv1 implements IDocumentPDF{
                 Node item = attributes.item(a);
                 final String itemName = item.getNodeName();
                 if (logger.isInfoEnabled())
-                    logger.info("  [%s/%s] %s = %s%n", indent, childName, itemName, child.getAttribute(itemName));
+                    logger.info(" [{}/{}] {} = {}", indent, childName, itemName, child.getAttribute(itemName));
             }
 
-            printChildren(child, indent);
+            try {
+                printChildren(child, indent);
+            } catch (Exception e) {
+                logger.error("Erreur lors de l'affichage des métadonnées : {}", e.getMessage());
+            }
+
         }
     }
 

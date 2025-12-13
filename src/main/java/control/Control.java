@@ -15,7 +15,14 @@ import java.io.IOException;
 public class Control {
 
     public static void main(String[] args) throws IOException {
-        new Control(args);
+        try {
+            new Control(args);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage());
+            e.printStackTrace();
+        }
+
+
     }
 
     public Control(String[] args) {

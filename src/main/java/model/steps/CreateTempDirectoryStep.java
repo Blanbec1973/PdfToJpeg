@@ -17,8 +17,10 @@ public class CreateTempDirectoryStep extends AbstractProcessingStep {
     }
 
     public File createTempDirectory(String pathTemp) {
-        File tempDir = new File(pathTemp);
-        tempDir.mkdirs();
+        File tempDir = new File(System.getProperty("java.io.tmpdir"),pathTemp);
+        if (!tempDir.exists()) {
+            tempDir.mkdirs();
+        }
         logger.info("Temp directory : {}.", tempDir.getAbsolutePath());
         return tempDir;
     }
