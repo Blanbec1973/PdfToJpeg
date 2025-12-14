@@ -8,7 +8,7 @@ public abstract class AbstractProcessingStep implements ProcessingStep {
     protected ProcessingStep next;
     protected final Logger logger;
 
-    public AbstractProcessingStep(Logger logger) {
+    protected AbstractProcessingStep(Logger logger) {
         this.logger = logger;
     }
 

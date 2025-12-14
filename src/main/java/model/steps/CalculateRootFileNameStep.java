@@ -15,7 +15,7 @@ public class CalculateRootFileNameStep extends AbstractProcessingStep {
     public boolean handle(ProcessingContext context) {
         String rootFileName = calculateRootFileName(context.getMostRecentFile());
         if (rootFileName == null) {
-            System.out.println("Nom racine non calculé.");
+            logger.error("Nom racine non calculé.");
             return false;
         }
         context.setRootFileName(rootFileName);

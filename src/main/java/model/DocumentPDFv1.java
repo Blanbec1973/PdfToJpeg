@@ -57,9 +57,9 @@ public class DocumentPDFv1 implements IDocumentPDF{
                 }
                 writer.setOutput(stream);
                 writer.write(metadata, new IIOImage(image, null, metadata), writeParam);
-            } catch (Throwable t) {
-                logger.error("Erreur lors de la création du fichier : {}", t.getMessage(), t);
-                javax.swing.JOptionPane.showMessageDialog(null, "Erreur : " + t.getMessage());
+            } catch (RuntimeException e) {
+                logger.error("Erreur lors de la création du fichier : {}", e.getMessage(), e);
+                javax.swing.JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage());
             }
 
             logger.info("Creating file {}.", file.getAbsolutePath());
