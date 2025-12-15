@@ -23,7 +23,6 @@ public class DocumentPDFv1 implements IDocumentPDF{
     private static final Logger logger = LogManager.getRootLogger();
     public static final String JAVAX_IMAGEIO_JPEG_IMAGE_1_0 = "javax_imageio_jpeg_image_1.0";
     private final PDDocument pdfDocument;
-    public static final String VALUE = "value";
     public static final String DENSITY_UNITS_PIXELS_PER_INCH = "01";
 
 
@@ -47,7 +46,7 @@ public class DocumentPDFv1 implements IDocumentPDF{
                 continue;
             }
 
-            setDPI2(metadata);
+            setDPI(metadata);
 
             final File file = new File(tempDir, outputFileName);
             logger.info("Tentative de création du fichier : {}", file.getAbsolutePath());
@@ -68,36 +67,7 @@ public class DocumentPDFv1 implements IDocumentPDF{
         return true;
     }
 
-    @Override
-        public void setDPI(IIOMetadata metadata) throws IIOInvalidTreeException {
-            // for JFIF, it's dots per inch
-            double dotsPerInch = 150;
-
-            IIOMetadataNode horizontal = new IIOMetadataNode("HorizontalPixelSize");
-            horizontal.setAttribute(VALUE, Double.toString(dotsPerInch));
-
-            IIOMetadataNode vert = new IIOMetadataNode("VerticalPixelSize");
-            vert.setAttribute(VALUE, Double.toString(dotsPerInch));
-
-            IIOMetadataNode dim = new IIOMetadataNode("Dimension");
-            dim.appendChild(horizontal);
-            dim.appendChild(vert);
-
-            IIOMetadataNode jpegVariety = new IIOMetadataNode("JPEGvariety");
-            IIOMetadataNode markerSequence = new IIOMetadataNode("markerSequence");
-            IIOMetadataNode sof = new IIOMetadataNode("sof");
-
-            IIOMetadataNode root = new IIOMetadataNode(JAVAX_IMAGEIO_JPEG_IMAGE_1_0);
-            root.appendChild(dim);
-            root.appendChild(jpegVariety);
-            root.appendChild(markerSequence);
-            printChildren(root, "");
-            root.appendChild(sof);
-
-            metadata.mergeTree(JAVAX_IMAGEIO_JPEG_IMAGE_1_0, root);
-    }
-
-    private static void setDPI2(IIOMetadata metadata) throws IIOInvalidTreeException {
+    public void setDPI(IIOMetadata metadata) throws IIOInvalidTreeException {
         String metadataFormat = JAVAX_IMAGEIO_JPEG_IMAGE_1_0;
         IIOMetadataNode root = new IIOMetadataNode(metadataFormat);
         IIOMetadataNode jpegVariety = new IIOMetadataNode("JPEGvariety");
