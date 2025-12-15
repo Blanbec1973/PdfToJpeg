@@ -48,7 +48,7 @@ class ConvertPdfToJpegStepTest {
         boolean result = step.handle(context);
 
         assertTrue(result, "Le step doit retourner true si la conversion réussit");
-        verify(mockDoc).convertPdfToJpeg(eq("output"), eq(tempDir));
+        verify(mockDoc).convertPdfToJpeg("output", tempDir);
         verify(step).handleNext(context);
 
         // Nettoyage
