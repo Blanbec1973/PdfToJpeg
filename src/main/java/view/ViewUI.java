@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ViewUI {
+public class ViewUI implements IUserInterface {
     private static final JTextArea logArea = new JTextArea();
     private static final JFrame frame= new JFrame("PdfToJpeg - Traitement");
     private final AtomicBoolean userConfirmed = new AtomicBoolean(false);

@@ -2,7 +2,7 @@
 package model.steps;
 
 import model.ProcessingContext;
-import view.ViewUI;
+import view.IUserInterface;
 import org.apache.logging.log4j.core.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,13 +16,13 @@ class AskUserConfirmationStepTest {
 
     private Logger logger;
     private ProcessingContext context;
-    private ViewUI viewUI;
+    private IUserInterface viewUI;
     private AskUserConfirmationStep step;
 
     @BeforeEach
     void setUp() {
         logger = mock(Logger.class);
-        viewUI = mock(ViewUI.class);
+        viewUI = mock(IUserInterface.class);
         context = mock(ProcessingContext.class);
         step = spy(new AskUserConfirmationStep(logger));
     }

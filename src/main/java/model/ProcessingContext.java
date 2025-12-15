@@ -1,7 +1,7 @@
 package model;
 
 
-import view.ViewUI;
+import view.IUserInterface;
 
 import java.io.File;
 
@@ -10,9 +10,9 @@ public class ProcessingContext {
     private String rootFileName;
     private File tempDir;
     private File rootDirectory;
-    private final ViewUI viewUI;
+    private final IUserInterface viewUI;
 
-    public ProcessingContext(ViewUI viewUI) {
+    public ProcessingContext(IUserInterface viewUI) {
         this.viewUI = viewUI;
     }
 
@@ -48,7 +48,7 @@ public class ProcessingContext {
         return mostRecentFile;
     }
 
-    public ViewUI getUI() {
+    public IUserInterface getUI() {
         return viewUI;
     }
 }
