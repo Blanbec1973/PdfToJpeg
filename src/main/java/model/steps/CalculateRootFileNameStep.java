@@ -28,7 +28,13 @@ public class CalculateRootFileNameStep extends AbstractProcessingStep {
         String tempName = mostRecentFile.getName();
         int first = tempName.indexOf("-")+1;
         int end = tempName.indexOf("-",first);
-        String temp = tempName.substring(first, end);
+        String temp;
+        try {
+            temp = tempName.substring(first, end);
+        } catch (StringIndexOutOfBoundsException e) {
+            logger.error("Invalid format file name : {}", tempName);
+            return null;
+        }
         int fileNumber = Integer.parseInt(temp.trim());
 
         if (fileNumber == 12 || fileNumber == 22 || fileNumber == 32) {
