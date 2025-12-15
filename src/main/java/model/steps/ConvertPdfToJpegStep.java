@@ -1,11 +1,11 @@
 package model.steps;
 
 
-import model.DocumentPDFv1;
 import model.IDocumentPDF;
 import model.ProcessingContext;
 import org.apache.logging.log4j.core.Logger;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ConvertPdfToJpegStep extends AbstractProcessingStep {
@@ -18,7 +18,7 @@ public class ConvertPdfToJpegStep extends AbstractProcessingStep {
         boolean success;
         // Utilisation de DocumentPDFv1 ou DocumentPDFv0
         try {
-            IDocumentPDF monDoc = new DocumentPDFv1(context.getMostRecentFile());
+            IDocumentPDF monDoc = createDocument(context.getMostRecentFile());
             success = monDoc.convertPdfToJpeg(context.getRootFileName(), context.getTempDir());
         } catch (IOException e) {
             logger.error("Error while converting PDF to JPEG : {}", e.getMessage());
@@ -29,5 +29,9 @@ public class ConvertPdfToJpegStep extends AbstractProcessingStep {
             return false;
         }
         return handleNext(context);
+    }
+
+    protected IDocumentPDF createDocument(File file) throws IOException {
+        return new model.DocumentPDFv1(file);
     }
 }
