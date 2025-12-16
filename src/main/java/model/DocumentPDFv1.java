@@ -31,7 +31,7 @@ public class DocumentPDFv1 implements IDocumentPDF{
     }
     @Override
     public boolean convertPdfToJpeg(String rootFileName, File tempDir) throws IOException {
-        PDFRenderer pdfRenderer = new PDFRenderer(pdfDocument);
+        PDFRenderer pdfRenderer = createRenderer(pdfDocument);
 
         for (int page = 0; page < pdfDocument.getNumberOfPages(); page++) {
             BufferedImage image = pdfRenderer.renderImageWithDPI(page, 200, ImageType.RGB);
@@ -120,7 +120,8 @@ public class DocumentPDFv1 implements IDocumentPDF{
         }
     }
 
-
-
+    protected PDFRenderer createRenderer(PDDocument doc) {
+        return new PDFRenderer(doc);
+    }
 
 }
